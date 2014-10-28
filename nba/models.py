@@ -2,16 +2,22 @@ from django.db import models
 from django.utils import timezone
 import datetime
 
-class Game(models.Model):
-
-	# Columns
-	home_id = models.CharField(max_length=16) 
-	away_id = models.CharField(max_length=16)
-	game_id = models.CharField(max_length=16)
-
 
 class Team(models.Model):
-	city = models.CharField(max_length=100)
-	nickname = models.CharField(max_length=100)
-	team_id = models.CharField(max_length=16)
+
+	team_id = models.CharField(unique=True, max_length=16)
+	city = models.CharField(max_length=64)
+	nickname = models.CharField(max_length=64)
 	key = models.CharField(max_length=3)
+
+
+class Game(models.Model):
+
+	game_id = models.CharField(unique=True, max_length=16)
+	date = models.DateTimeField()
+	home = models.ForeignKey('Team', to_field='team_id', related_name='game_home')
+	away = models.ForeignKey('Team', to_field='team_id', related_name='game_away')
+	home_score = models.IntegerField(null=True)
+	away_score = models.IntegerField(null=True)	
+
+
