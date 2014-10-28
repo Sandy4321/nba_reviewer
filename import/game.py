@@ -83,7 +83,7 @@ class Game(NBA.Configuration):
 
 # NBA Season 2014 - 2015
 # First Game: 28th October 2014
-start_date = datetime.date(2015, 03, 29)
+start_date = datetime.date(2014, 10, 28)
 # Last Game: 15th April 2015
 end_date = datetime.date(2015, 04, 15)
 
