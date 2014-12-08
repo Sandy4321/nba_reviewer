@@ -1,0 +1,12 @@
+{% now "r" %}
+
+{% if today_games_list %}
+    <ul>
+    {% for game in today_games_list %}
+    	{{ game.home.city }} - {{ game.away.city }}
+        <li><a href="{% url 'games:detail' game.id %}">--></a></li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>No games are available.</p>
+{% endif %}

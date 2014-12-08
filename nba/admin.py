@@ -5,7 +5,7 @@ from nba.models import Game, Team
 
 class GameAdmin(admin.ModelAdmin):
 	fieldsets = [
-        ('Team Home',          {'fields': ['home_id']}),
+        ('Team Home',          {'fields': ['home']}),
     ]
 
 admin.site.register(Game, GameAdmin)
