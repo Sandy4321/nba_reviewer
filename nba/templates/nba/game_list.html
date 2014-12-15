@@ -1,4 +1,7 @@
-{% now "r" %}
+{% extends "nba/base.html" %}
+{% block title %}Today's NBA Games{% endblock %}
+
+{% block content %}
 
 {% if today_games_list %}
     <ul>
@@ -10,3 +13,5 @@
 {% else %}
     <p>No games are available.</p>
 {% endif %}
+
+{% endblock %}

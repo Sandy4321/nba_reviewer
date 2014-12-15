@@ -3,20 +3,13 @@
 
 {% block content %}
 
-<p> {{ game.home }} - {{ game.away}} </p>
-<p> {{ game.home_score }} - {{ game.away_score}} </p>
-
-<h1> Comments </h1>
-<li><a href="{% url 'games:comments' game.id %}">Show all comments</a></li>
-
 {% for comment in game.comment_set.all %}
-	<p>
-
+<p>
 	<h1> {{ comment.comment_category.category_name }} </h1>
 	<h2> {{ comment.text }} </h2>
 	<h3> {{ comment.rating }} </h3>
 
-	</p>
+</p>
 {% endfor %}
 
 {% endblock %}

@@ -14,7 +14,6 @@ class Team(models.Model):
 	def __unicode__(self):
 		return self.nickname
 
-	
 
 class Game(models.Model):
 
@@ -32,3 +31,26 @@ class Game(models.Model):
 		today_end = datetime.combine(tomorrow, time())
 
 		return Game.objects.filter(date__lte=today_end, date__gte=today_start)
+
+	def __unicode__(self):
+		return '%s - %s (%s)' % (self.home, self.away, self.date)
+
+
+class CommentCategory(models.Model):
+
+	category_name = models.CharField(max_length=64)
+
+	def __unicode__(self):
+		return self.category_name
+
+
+class Comment(models.Model):
+	
+	comment_category = models.ForeignKey(CommentCategory, blank=True, null=True)
+	game = models.ForeignKey(Game)
+	rating = models.IntegerField(default=0)
+	text = models.CharField(max_length=1024)
+	date = models.DateTimeField()
+
+	def __unicode__(self):
+		return self.text
