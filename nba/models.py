@@ -30,7 +30,7 @@ class Game(models.Model):
 		today_start = datetime.combine(today, time())
 		today_end = datetime.combine(tomorrow, time())
 
-		return Game.objects.filter(date__lte=today_end, date__gte=today_start)
+		return Game.objects.filter(date__lte=today_end, date__gte=today_start).order_by('date')
 
 	def __unicode__(self):
 		return '%s - %s (%s)' % (self.home, self.away, self.date)

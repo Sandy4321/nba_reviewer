@@ -6,17 +6,22 @@
 <p> {{ game.home }} - {{ game.away}} </p>
 <p> {{ game.home_score }} - {{ game.away_score}} </p>
 
-<h1> Comments </h1>
-<li><a href="{% url 'games:comments' game.id %}">Show all comments</a></li>
+<a href="{% url 'games:comments' game.id %}">Show all comments</a>
 
-{% for comment in game.comment_set.all %}
-	<p>
+<h1>Write your own review: </h1>
 
-	<h1> {{ comment.comment_category.category_name }} </h1>
-	<h2> {{ comment.text }} </h2>
-	<h3> {{ comment.rating }} </h3>
+<form action="{% url 'games:review' game.id %}" method="post">
+{% csrf_token %}
+	<label for="review_offence">Offence</label><br />
+    <input type="text" name="review_offence" id="review_offence" /> <br />
 
-	</p>
-{% endfor %}
+    <label for="review_defence">Defence</label><br />
+    <input type="text" name="review_defence" id="review_defence" /> <br />
+
+    <label for="review_commentary">Commentary</label><br />
+    <input type="text" name="review_commentary" id="review_commentary" /> <br />
+    
+<input type="submit" value="Review" />
+</form>
 
 {% endblock %}
