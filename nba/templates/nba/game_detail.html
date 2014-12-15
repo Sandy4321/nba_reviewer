@@ -14,14 +14,17 @@
 {% csrf_token %}
 	<label for="review_offence">Offence</label><br />
     <input type="text" name="review_offence" id="review_offence" /> <br />
+    <input type="number" name="rating_offence" id="rating_offence" min="0" max="10"> <br />
 
     <label for="review_defence">Defence</label><br />
     <input type="text" name="review_defence" id="review_defence" /> <br />
+    <input type="number" name="rating_defence" id="rating_defence" min="0" max="10"> <br />
 
     <label for="review_commentary">Commentary</label><br />
     <input type="text" name="review_commentary" id="review_commentary" /> <br />
+    <input type="number" name="rating_commentary" id="rating_commentary" min="0" max="10"> <br />
     
-<input type="submit" value="Review" />
+<input type="submit" value="Review" class="btn btn-primary btn-lg active"/>
 </form>
 
 {% endblock %}

@@ -34,15 +34,20 @@ def review(request, game_id):
         review_defence = request.POST['review_defence']
         review_commentary = request.POST['review_commentary']
 
+        rating_offence = request.POST['rating_offence']
+        rating_defence = request.POST['rating_defence']
+        rating_commentary = request.POST['rating_commentary']
+
         reviews = [ 
-            { 'comment' : review_offence, 'category' : CommentCategory.objects.get(category_name='Offence')}, 
-            { 'comment' : review_defence , 'category' : CommentCategory.objects.get(category_name='Defence') },
-            { 'comment' : review_commentary, 'category' : CommentCategory.objects.get(category_name='Commentary')}
+            { 'comment' : review_offence, 'rating': rating_offence, 'category' : CommentCategory.objects.get(category_name='Offence')}, 
+            { 'comment' : review_defence , 'rating': rating_defence, 'category' : CommentCategory.objects.get(category_name='Defence') },
+            { 'comment' : review_commentary, 'rating': rating_commentary, 'category' : CommentCategory.objects.get(category_name='Commentary')}
         ]
 
         for review in reviews:
             c = Comment()
             c.text = review.get('comment')
+            c.rating = review.get('rating')
             c.game = game
             c.date = datetime.now()
             c.comment_category = review.get('category')
