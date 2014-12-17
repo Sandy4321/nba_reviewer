@@ -47,7 +47,7 @@ def review(request, game_id):
         for review in reviews:
             c = Comment()
             c.text = review.get('comment')
-            c.rating = review.get('rating')
+            c.rating = (int(review.get('rating')) * 10)
             c.game = game
             c.date = datetime.now()
             c.comment_category = review.get('category')

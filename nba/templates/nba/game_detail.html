@@ -1,10 +1,12 @@
 {% extends "nba/base.html" %}
-{% block title %} {{ game.away }} @ {{ game.home }} {% endblock %}
+{% block title %} {{ game.away.key }} @ {{ game.home.key }} {% endblock %}
+{% block jumbotron %} {{ game.away.key }} @ {{ game.home.key }} {% endblock %}
 
 {% block content %}
 
-<p> {{ game.home }} - {{ game.away}} </p>
-<p> {{ game.home_score }} - {{ game.away_score}} </p>
+
+<p> {{ game.away }} - {{ game.home}} </p>
+<p> {{ game.away_score }} - {{ game.home_score}} </p>
 
 <a href="{% url 'games:comments' game.id %}">Show all comments</a>
 

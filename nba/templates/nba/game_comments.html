@@ -1,15 +1,22 @@
 {% extends "nba/base.html" %}
-{% block title %} {{ game.away }} @ {{ game.home }} {% endblock %}
+{% block title %} {{ game.away.key }} @ {{ game.home.key }} {% endblock %}
+{% block jumbotron %} {{ game.away.key }} @ {{ game.home.key }} {% endblock %}
 
 {% block content %}
 
 {% for comment in game.comment_set.all %}
 <p>
 	<h1> {{ comment.comment_category.category_name }} </h1>
-	<h2> {{ comment.text }} </h2>
-	<h3> {{ comment.rating }} </h3>
+	<h3> {{ comment.text }} </h3>
+
+	<div class="progress">
+	  <div class="progress-bar progress-bar-striped" role="progressbar" aria-valuenow="{{ comment.rating }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ comment.rating }}%">
+	   {{  comment.rating }}
+	  </div>
+	</div>
 
 </p>
+
 {% endfor %}
 
 {% endblock %}

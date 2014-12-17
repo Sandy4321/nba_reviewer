@@ -1,13 +1,14 @@
 {% extends "nba/base.html" %}
 {% block title %}Today's NBA Games{% endblock %}
+{% block jumbotron %} Today's NBA Games {% endblock %}
 
 {% block content %}
 
 {% if today_games_list %}
     <ul>
     {% for game in today_games_list %}
-    	{{ game.home.city }} - {{ game.away.city }}  ( {{ game.date }} )
-        <li><a href="{% url 'games:detail' game.id %}">--></a></li>
+    	
+        <li><a href="{% url 'games:detail' game.id %}">{{ game.home.city }} - {{ game.away.city }}  ( {{ game.date }} )</a></li>
     {% endfor %}
     </ul>
 {% else %}
