@@ -4,18 +4,20 @@
 
 {% block content %}
 
+
+{{game.comment_set.all}}
+
 {% for comment in game.comment_set.all %}
-<p>
-	<h1> {{ comment.comment_category.category_name }} </h1>
-	<h3> {{ comment.text }} </h3>
+	<p>
+		<h3> {{ comment.text }} </h3>
+	</p>
 
 	<div class="progress">
-	  <div class="progress-bar progress-bar-striped" role="progressbar" aria-valuenow="{{ comment.rating }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ comment.rating }}%">
-	   {{  comment.rating }}
-	  </div>
+	  <div class="progress-bar progress-bar-striped" role="progressbar" aria-valuenow="{{ comment.sum }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ comment.sum }}%">
+	   {{  comment.sum }} 
+	 </div>
 	</div>
 
-</p>
 
 {% endfor %}
 

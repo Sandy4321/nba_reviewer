@@ -12,21 +12,48 @@
 
 <h1>Write your own review: </h1>
 
+
+
 <form action="{% url 'games:review' game.id %}" method="post">
-{% csrf_token %}
-	<label for="review_offence">Offence</label><br />
-    <input type="text" name="review_offence" id="review_offence" /> <br />
-    <input type="number" name="rating_offence" id="rating_offence" min="0" max="10"> <br />
+	{% csrf_token %}
 
-    <label for="review_defence">Defence</label><br />
-    <input type="text" name="review_defence" id="review_defence" /> <br />
-    <input type="number" name="rating_defence" id="rating_defence" min="0" max="10"> <br />
+	<div class="row">
+		<div class="col-md-8">
+			<textarea name="review" id="review" class="form-control" rows="3" placeholder="Write your own review."></textarea>
+		</div>
+	</div>
 
-    <label for="review_commentary">Commentary</label><br />
-    <input type="text" name="review_commentary" id="review_commentary" /> <br />
-    <input type="number" name="rating_commentary" id="rating_commentary" min="0" max="10"> <br />
-    
-<input type="submit" value="Review" class="btn btn-primary btn-lg active"/>
+	<div class="row">
+		<div class="col-md-4">
+			<label for="review_offence">Offence</label>
+		</div>
+		<div class="col-md-4">
+			<input type="number" name="rating_offence" id="rating_offence"  class="rating"  data-min="0" data-max="10" data-empty-value="0" />
+		</div>
+	</div>
+	
+	<div class="row">
+		<div class="col-md-4">
+			<label for="review_defence">Defence</label>
+		</div>
+		<div class="col-md-4">
+			<input type="number" name="rating_defence" id="rating_defence" class="rating"  data-min="0" data-max="10" data-empty-value="0" />
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col-md-4">
+			<label for="review_commentary">Commentary</label>
+		</div>
+		<div class="col-md-4">
+			<input type="number" name="rating_commentary" id="rating_commentary" class="rating"  data-min="0" data-max="10" data-empty-value="0" />
+		</div>
+	</div>
+
+	<div class="row">
+		<input type="submit" value="Review" class="btn btn-primary btn-lg active"/>
+	</div>
+
 </form>
 
-{% endblock %}
+{% endblock %} 

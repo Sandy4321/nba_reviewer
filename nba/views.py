@@ -29,33 +29,48 @@ class CommentsView(generic.DetailView):
 def review(request, game_id):
     game = get_object_or_404(Game, pk=game_id)
     try:
-        #selected_choice = p.choice_set.get(pk=request.POST['choice'])
-        review_offence = request.POST['review_offence']
-        review_defence = request.POST['review_defence']
-        review_commentary = request.POST['review_commentary']
+        comment_text = request.POST['review']
 
         rating_offence = request.POST['rating_offence']
         rating_defence = request.POST['rating_defence']
         rating_commentary = request.POST['rating_commentary']
 
         reviews = [ 
-            { 'comment' : review_offence, 'rating': rating_offence, 'category' : CommentCategory.objects.get(category_name='Offence')}, 
-            { 'comment' : review_defence , 'rating': rating_defence, 'category' : CommentCategory.objects.get(category_name='Defence') },
-            { 'comment' : review_commentary, 'rating': rating_commentary, 'category' : CommentCategory.objects.get(category_name='Commentary')}
+            {'rating': rating_offence, 'category' : CommentCategory.objects.get(category_name='Offence')}, 
+            {'rating': rating_defence, 'category' : CommentCategory.objects.get(category_name='Defence') },
+            {'rating': rating_commentary, 'category' : CommentCategory.objects.get(category_name='Commentary')}
         ]
 
         for review in reviews:
-            c = Comment()
-            c.text = review.get('comment')
-            c.rating = (int(review.get('rating')) * 10)
-            c.game = game
-            c.date = datetime.now()
-            c.comment_category = review.get('category')
-            c.save()
+            c = Comment.objects.filter(comment_category=review.get('category'), game=game)
+
+            if c:
+                c = c[0]
+                comment_rating = c.rating
+                c.rating = comment_rating + (int(review.get('rating')) * 10)
+                c.amount += 1
+                c.game = game
+                c.comment_category = review.get('category')
+                c.date = datetime.now()
+                c.save()
+            else:
+                c = Comment()
+                c.amount = 1
+                c.rating = (int(review.get('rating')) * 10)
+                c.game = game
+                c.comment_category = review.get('category')
+                c.date = datetime.now()
+                c.save()
+
+        c = Comment()
+        c.text = comment_text
+        c.game = game
+        c.date = datetime.now()
+        c.save()
 
     except (KeyError, Game.DoesNotExist):
         # Redisplay the poll voting form.
-        return render(request, 'games/detail.html', {
+        return render(request, 'nba/error.html', {
             'game': game,
             'error_message': "Something went wrong",
         })

@@ -18,7 +18,7 @@ class Team(models.Model):
 class Game(models.Model):
 
 	game_id = models.CharField(unique=True, max_length=16)
-	date = models.DateTimeField()
+	date = models.DateTimeField(null=True)
 	home = models.ForeignKey('Team', to_field='team_id', related_name='game_home')
 	away = models.ForeignKey('Team', to_field='team_id', related_name='game_away')
 	home_score = models.IntegerField(null=True)
@@ -51,6 +51,13 @@ class Comment(models.Model):
 	rating = models.IntegerField(default=0)
 	text = models.CharField(max_length=1024)
 	date = models.DateTimeField()
+	amount = models.IntegerField(default=0)
+
+	def sum(self):
+		if self.amount == 0:
+			return 0
+		else:
+			return self.rating / self.amount
 
 	def __unicode__(self):
 		return self.text
