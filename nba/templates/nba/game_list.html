@@ -1,16 +1,47 @@
 {% extends "nba/base.html" %}
 {% block title %}Today's NBA Games{% endblock %}
-{% block jumbotron %} Today's NBA Games {% endblock %}
 
 {% block content %}
 
-{% if today_games_list %}
-    <ul>
-    {% for game in today_games_list %}
-    	
-        <li><a href="{% url 'games:detail' game.id %}">{{ game.home.city }} - {{ game.away.city }}  ( {{ game.date }} )</a></li>
+{% if game_list %}
+    
+    {% for game in game_list %}
+    	<div class="row vertical-align">
+
+    		<div class="col-xs-3">
+    			<img class="img-responsive center-block" src="{{STATIC_URL}}img/logos/{{game.away.key}}.gif" />
+    		</div>
+
+    		<div class="col-xs-6 text-center">
+	    		<div class="row">
+	    			{{ game.date }} 
+	    		</div>
+
+	    		<div class="row">
+	    			<a href="{% url 'games:detail' game.id %}">{{ game.away.key }} @ {{ game.home.key }}</a>
+	    		</div>
+
+	    		<div class="row">
+	    			<div class="progress">
+						<div class="progress-bar progress-bar-striped" role="progressbar" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100" style="width: 70%">
+						   70
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					{{ game.away_score }} - {{ game.home_score }}</a>
+				</div>
+    		</div>
+    		<div class="col-xs-3">
+    			<img class="img-responsive center-block" src="{{STATIC_URL}}img/logos/{{game.home.key}}.gif" />
+    		</div>
+
+        </div>
+
+        <hr>
+
     {% endfor %}
-    </ul>
+
 {% else %}
     <p>No games are available.</p>
 {% endif %}

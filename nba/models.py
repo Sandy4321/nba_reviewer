@@ -2,6 +2,7 @@ from django.db import models
 from django.utils import timezone
 import datetime
 from datetime import datetime, timedelta, time
+from pytz import timezone
 
 
 class Team(models.Model):
@@ -24,8 +25,8 @@ class Game(models.Model):
 	home_score = models.IntegerField(null=True)
 	away_score = models.IntegerField(null=True)
 
-	def get_today_games(self):
-		today = datetime.now().date()
+	def get_games(self):
+		today = datetime.now(timezone('EST'))
 		tomorrow = today + timedelta(1)
 		today_start = datetime.combine(today, time())
 		today_end = datetime.combine(tomorrow, time())

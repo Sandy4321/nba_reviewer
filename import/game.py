@@ -58,8 +58,8 @@ class Game(NBA.Configuration):
 
 
 					date = datetime.datetime.strptime(game['date']+game['time'], "%Y%m%d%H%M") 
-					eastern = timezone('US/Eastern')
-					date = eastern.localize(date) # add timezone to the date
+					tz = timezone('UTC')
+					date = tz.localize(date) # add timezone to the date
 
 
 					if game_id:

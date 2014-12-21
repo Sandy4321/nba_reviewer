@@ -9,13 +9,13 @@ from nba.models import Team, Game, Comment, CommentCategory
 
 class IndexView(generic.ListView):
     template_name = 'nba/game_list.html'
-    context_object_name = 'today_games_list'
+    context_object_name = 'game_list'
 
-    def get_queryset(self):
+    def get_queryset(self, x=None):
         """Show only the games of today."""
-        return Game().get_today_games()
+        return Game().get_games()
         
-
+        
 class DetailView(generic.DetailView):
     model = Game
     template_name = 'nba/game_detail.html'
