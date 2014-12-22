@@ -6,10 +6,12 @@
 {% if game_list %}
     
     {% for game in game_list %}
-    	<div class="row vertical-align">
+
+
+    	<div class="row vertical-align" onclick="location.href='{% url 'games:detail' game.id %}';" >
 
     		<div class="col-xs-3">
-    			<img class="img-responsive center-block" src="{{STATIC_URL}}img/logos/{{game.away.key}}.gif" />
+    			<img class="img-responsive center-block" src="{{STATIC_URL}}bootstrap/img/logos/{{game.away.key}}.gif" />
     		</div>
 
     		<div class="col-xs-6 text-center">
@@ -18,7 +20,7 @@
 	    		</div>
 
 	    		<div class="row">
-	    			<a href="{% url 'games:detail' game.id %}">{{ game.away.key }} @ {{ game.home.key }}</a>
+	    			{{ game.away.key }} @ {{ game.home.key }}
 	    		</div>
 
 	    		<div class="row">
@@ -33,11 +35,11 @@
 				</div>
     		</div>
     		<div class="col-xs-3">
-    			<img class="img-responsive center-block" src="{{STATIC_URL}}img/logos/{{game.home.key}}.gif" />
+    			<img class="img-responsive center-block" src="{{STATIC_URL}}bootstrap/img/logos/{{game.home.key}}.gif" />
     		</div>
 
         </div>
-
+        
         <hr>
 
     {% endfor %}
