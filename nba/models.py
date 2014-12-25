@@ -33,32 +33,53 @@ class Game(models.Model):
 
 		return Game.objects.filter(date__lte=today_end, date__gte=today_start).order_by('date')
 
+
+	def rating(self):
+		gameratings = GameRating.objects.filter(game = self)
+
+		total_offence = 0
+		total_defence = 0
+		total_commentary = 0
+		length = float(len(gameratings))
+
+		for game in gameratings:
+			total_offence += game.offence
+			total_defence += game.defence
+			total_commentary += game.commentary
+
+		return {'offence' : int((total_offence / length) * 10), 'defence' : int((total_defence / length) * 10), 'commentary' : int((total_commentary / length) * 10)}
+
 	def __unicode__(self):
 		return '%s - %s (%s)' % (self.home, self.away, self.date)
 
 
-class CommentCategory(models.Model):
-
-	category_name = models.CharField(max_length=64)
-
-	def __unicode__(self):
-		return self.category_name
-
-
-class Comment(models.Model):
-	
-	comment_category = models.ForeignKey(CommentCategory, blank=True, null=True)
+class GameRating(models.Model):
 	game = models.ForeignKey(Game)
-	rating = models.IntegerField(default=0)
-	text = models.CharField(max_length=1024)
-	date = models.DateTimeField()
-	amount = models.IntegerField(default=0)
+	offence = models.IntegerField(default=0)
+	defence = models.IntegerField(default=0)
+	commentary = models.IntegerField(default=0)
 
 	def sum(self):
-		if self.amount == 0:
-			return 0
-		else:
-			return self.rating / self.amount
+		gameratings = GameRating.objects.filter(game = self.game)
 
+		total_offence = 0
+		total_defence = 0
+		total_commentary = 0
+		length = len(gameratings)
+
+		for game in gameratings:
+			total_offence += game.offence
+			total_defence += game.defence
+			total_commentary += game.commentary
+
+		return {'offence' : total_offence / length, 'defence' : total_defence / length, 'commentary' : total_commentary / length}
+
+
+class GameComment(models.Model):
+	game = models.ForeignKey(Game)
+	text = models.CharField(max_length=1024)
+	conclusion = models.CharField(max_length=128)
+	date = models.DateTimeField()
+	
 	def __unicode__(self):
-		return self.text
+		return self.conclusion

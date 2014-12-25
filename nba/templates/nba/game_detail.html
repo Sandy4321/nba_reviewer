@@ -9,7 +9,7 @@
 
 <a href="{% url 'games:comments' game.id %}">Show all comments</a>
 
-<h1>Write your own review: </h1>
+<h1>Review: </h1>
 
 
 
@@ -18,7 +18,13 @@
 
 	<div class="row">
 		<div class="col-md-8">
-			<textarea name="review" id="review" class="form-control" rows="3" placeholder="Write your own review."></textarea>
+			<textarea name="review" id="review" class="form-control" rows="3" placeholder="Write your own review:"></textarea>
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col-md-8">
+			<input type="text" class="form-control" name="conclusion" id="conclusion" placeholder="Your conclusion:"/>
 		</div>
 	</div>
 

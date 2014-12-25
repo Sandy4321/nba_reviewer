@@ -3,18 +3,46 @@
 
 {% block content %}
 
-{% for comment in game.comment_set.all %}
-	<p>
-		<h3> {{ comment.text }} </h3>
-	</p>
-
-	<div class="progress">
-	  <div class="progress-bar progress-bar-striped" role="progressbar" aria-valuenow="{{ comment.sum }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ comment.sum }}%">
-	   {{  comment.sum }} 
-	 </div>
+<h1> Offence </h1>
+<div class="progress">
+	<div class="progress-bar progress-bar-striped" role="progressbar" 
+		 aria-valuenow="{{ game.rating.offence }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ game.rating.offence }}%">
+		{{ game.rating.offence }} 
 	</div>
+</div>
+
+<h1> Defence </h1>
+<div class="progress">
+	<div class="progress-bar progress-bar-striped" role="progressbar" 
+		 aria-valuenow="{{ game.rating.defence }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ game.rating.defence}}%">
+		{{ game.rating.defence }} 
+	</div>
+</div>
+
+<h1> Commentary </h1>
+<div class="progress">
+	<div class="progress-bar progress-bar-striped" role="progressbar" 
+		 aria-valuenow="{{ game.rating.commentary }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ game.rating.commentary }}%">
+		{{ game.rating.commentary }} 
+	</div>
+</div>
 
 
+{% for comment in game.gamecomment_set.all %}
+<article>
+  <header>
+    <h3>{{ comment.conclusion }}</h3>
+  </header>
+  <p>{{ comment.text }}</p>
+  <footer>
+    <p><small>Published: <time pubdate="pubdate">{{comment.date}}</time></small></p>
+  </footer>
+</article>
 {% endfor %}
+
+
+
+
+
 
 {% endblock %}
