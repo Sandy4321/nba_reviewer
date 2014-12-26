@@ -42,12 +42,26 @@ class Game(models.Model):
 		total_commentary = 0
 		length = float(len(gameratings))
 
+		if length == 0:
+			return
+
 		for game in gameratings:
 			total_offence += game.offence
 			total_defence += game.defence
 			total_commentary += game.commentary
 
-		return {'offence' : int((total_offence / length) * 10), 'defence' : int((total_defence / length) * 10), 'commentary' : int((total_commentary / length) * 10)}
+		total_offence = int((total_offence / length) * 10)
+		total_defence = int((total_defence / length) * 10)
+		total_commentary = int((total_commentary / length) * 10)
+
+		total = int( (total_offence + total_defence + total_commentary) / 3)
+
+		return {
+			'offence' : total_offence,
+			'defence' : total_defence,
+			'commentary' : total_commentary,
+			'total' : total
+		}
 
 	def __unicode__(self):
 		return '%s - %s (%s)' % (self.home, self.away, self.date)
