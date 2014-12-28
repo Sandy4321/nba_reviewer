@@ -3,7 +3,12 @@
 
 {% block content %}
 
-<h1> Offence </h1>
+<div class="jumbotron">
+	<h1> {{ game.away }} at {{ game.home}} </h1>
+</div>
+
+
+<h2> Offence </h2>
 <div class="progress">
 	<div class="progress-bar progress-bar-striped" role="progressbar" 
 		 aria-valuenow="{{ game.rating.offence }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ game.rating.offence }}%">
@@ -11,7 +16,7 @@
 	</div>
 </div>
 
-<h1> Defence </h1>
+<h2> Defence </h2>
 <div class="progress">
 	<div class="progress-bar progress-bar-striped" role="progressbar" 
 		 aria-valuenow="{{ game.rating.defence }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ game.rating.defence}}%">
@@ -19,13 +24,15 @@
 	</div>
 </div>
 
-<h1> Commentary </h1>
+<h2> Commentary </h2>
 <div class="progress">
 	<div class="progress-bar progress-bar-striped" role="progressbar" 
 		 aria-valuenow="{{ game.rating.commentary }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ game.rating.commentary }}%">
 		{{ game.rating.commentary }} 
 	</div>
 </div>
+
+<hr>
 
 
 {% for comment in game.gamecomment_set.all %}
@@ -38,6 +45,7 @@
     <p><small>Published: <time pubdate="pubdate">{{comment.date}}</time></small></p>
   </footer>
 </article>
+<hr>
 {% endfor %}
 
 

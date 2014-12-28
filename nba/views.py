@@ -1,21 +1,30 @@
 from django.shortcuts import get_object_or_404, render
+from django.views.generic.base import RedirectView
 from django.http import HttpResponseRedirect, HttpResponse
 from django.core.urlresolvers import reverse
 from django.views import generic
+from django.views.generic.dates import DayArchiveView
 from datetime import datetime, timedelta, time
-
-
+from pytz import timezone
 from nba.models import Team, Game, GameComment, GameRating
 
-class IndexView(generic.ListView):
-    template_name = 'nba/game_list.html'
-    context_object_name = 'game_list'
 
-    def get_queryset(self, x=None):
-        """Show only the games of today."""
-        return Game().get_games()
-        
-        
+def HomePageRedirect(request):
+    current_day = datetime.now(timezone('EST'))
+    year = current_day.strftime("%Y")
+    month = current_day.strftime("%b")
+    day = current_day.strftime("%d")
+
+    return HttpResponseRedirect(reverse('games:game_day', args=(year, month, day)))
+
+
+class GameDayArchiveView(DayArchiveView):
+    queryset = Game.objects.all()
+    date_field = "date"
+    make_object_list = True
+    allow_future = True
+
+
 class DetailView(generic.DetailView):
     model = Game
     template_name = 'nba/game_detail.html'

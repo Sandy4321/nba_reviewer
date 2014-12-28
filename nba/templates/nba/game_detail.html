@@ -3,13 +3,36 @@
 
 {% block content %}
 
+<div class="jumbotron">
+	<h1> {{ game.away }} at {{ game.home}} </h1>
+	<h4> Offence </h4>
+	<div class="progress">
+		<div class="progress-bar progress-bar-striped" role="progressbar" 
+			aria-valuenow="{{ game.rating.offence }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ game.rating.offence }}%">
+			{{ game.rating.offence }} 
+		</div>
+	</div>
 
-<p> {{ game.away }} - {{ game.home}} </p>
-<p> {{ game.away_score }} - {{ game.home_score}} </p>
+	<h4> Defence </h4>
+	<div class="progress">
+		<div class="progress-bar progress-bar-striped" role="progressbar" 
+			aria-valuenow="{{ game.rating.defence }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ game.rating.defence}}%">
+			{{ game.rating.defence }} 
+		</div>
+	</div>
 
-<a href="{% url 'games:comments' game.id %}">Show all comments</a>
+	<h4> Commentary </h4>
+	<div class="progress">
+		<div class="progress-bar progress-bar-striped" role="progressbar" 
+			aria-valuenow="{{ game.rating.commentary }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ game.rating.commentary }}%">
+			{{ game.rating.commentary }} 
+		</div>
+	</div>
 
-<h1>Review: </h1>
+	<p><a class="btn btn-primary btn-lg" href="{% url 'games:comments' game.id %}" role="button">Show all comments</a></p>
+</div>
+
+<h1>Write Your Own Review: </h1>
 
 
 
@@ -55,9 +78,9 @@
 		</div>
 	</div>
 
-	<div class="row">
-		<input type="submit" value="Review" class="btn btn-primary btn-lg active"/>
-	</div>
+	<p>
+		<input type="submit" value="Review" class="btn btn-primary btn-lg"/>
+	</p>
 
 </form>
 
