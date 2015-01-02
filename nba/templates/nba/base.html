@@ -13,6 +13,13 @@
   <script type="text/javascript" src="{{STATIC_URL}}bootstrap/js/jquery-2.1.1.min.js"></script>
   <script type="text/javascript" src="{{STATIC_URL}}bootstrap/js/bootstrap.min.js"></script>
   <script type="text/javascript" src="{{STATIC_URL}}bootstrap/js/rating-input-master/src/bootstrap-rating-input.js"></script>
+  <script type="text/javascript" src="{{STATIC_URL}}bootstrap/js/bootstrap-progressbar.js"></script>
+
+  <script type="text/javascript">
+     $(document).ready(function() {
+          $('.progress .progress-bar').progressbar({display_text: 'fill', use_percentage:false});
+      });
+  </script>
 
 </head>
 

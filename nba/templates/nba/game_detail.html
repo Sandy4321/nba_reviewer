@@ -8,24 +8,21 @@
 	<h4> Offence </h4>
 	<div class="progress">
 		<div class="progress-bar progress-bar-striped" role="progressbar" 
-			aria-valuenow="{{ game.rating.offence }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ game.rating.offence }}%">
-			{{ game.rating.offence }} 
+			data-transitiongoal="{{ game.rating.offence }}">
 		</div>
 	</div>
 
 	<h4> Defence </h4>
 	<div class="progress">
 		<div class="progress-bar progress-bar-striped" role="progressbar" 
-			aria-valuenow="{{ game.rating.defence }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ game.rating.defence}}%">
-			{{ game.rating.defence }} 
+			data-transitiongoal="{{ game.rating.defence }}" >
 		</div>
 	</div>
 
 	<h4> Commentary </h4>
 	<div class="progress">
 		<div class="progress-bar progress-bar-striped" role="progressbar" 
-			aria-valuenow="{{ game.rating.commentary }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ game.rating.commentary }}%">
-			{{ game.rating.commentary }} 
+			data-transitiongoal="{{ game.rating.commentary }}" >
 		</div>
 	</div>
 
@@ -52,28 +49,28 @@
 	</div>
 
 	<div class="row">
-		<div class="col-md-4">
-			<label for="review_offence">Offence</label>
+		<div class="col-xs-4">
+			<label for="rating_offence">Offence</label>
 		</div>
-		<div class="col-md-4">
+		<div class="col-xs-8">
 			<input type="number" name="rating_offence" id="rating_offence"  class="rating"  data-min="0" data-max="10" data-empty-value="0" />
 		</div>
 	</div>
 	
 	<div class="row">
-		<div class="col-md-4">
-			<label for="review_defence">Defence</label>
+		<div class="col-xs-4">
+			<label for="rating_defence">Defence</label>
 		</div>
-		<div class="col-md-4">
+		<div class="col-xs-8">
 			<input type="number" name="rating_defence" id="rating_defence" class="rating"  data-min="0" data-max="10" data-empty-value="0" />
 		</div>
 	</div>
 
 	<div class="row">
-		<div class="col-md-4">
-			<label for="review_commentary">Commentary</label>
+		<div class="col-xs-4">
+			<label for="rating_commentary">Commentary</label>
 		</div>
-		<div class="col-md-4">
+		<div class="col-xs-8">
 			<input type="number" name="rating_commentary" id="rating_commentary" class="rating"  data-min="0" data-max="10" data-empty-value="0" />
 		</div>
 	</div>

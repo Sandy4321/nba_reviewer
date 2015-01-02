@@ -11,24 +11,21 @@
 <h2> Offence </h2>
 <div class="progress">
 	<div class="progress-bar progress-bar-striped" role="progressbar" 
-		 aria-valuenow="{{ game.rating.offence }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ game.rating.offence }}%">
-		{{ game.rating.offence }} 
+		 data-transitiongoal="{{ game.rating.offence }}">
 	</div>
 </div>
 
 <h2> Defence </h2>
 <div class="progress">
 	<div class="progress-bar progress-bar-striped" role="progressbar" 
-		 aria-valuenow="{{ game.rating.defence }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ game.rating.defence}}%">
-		{{ game.rating.defence }} 
+		 data-transitiongoal="{{ game.rating.defence }}">
 	</div>
 </div>
 
 <h2> Commentary </h2>
 <div class="progress">
 	<div class="progress-bar progress-bar-striped" role="progressbar" 
-		 aria-valuenow="{{ game.rating.commentary }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ game.rating.commentary }}%">
-		{{ game.rating.commentary }} 
+		 data-transitiongoal="{{ game.rating.commentary }}">
 	</div>
 </div>
 
