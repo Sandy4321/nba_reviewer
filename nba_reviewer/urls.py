@@ -10,4 +10,6 @@ urlpatterns = patterns('',
 
     url(r'^games/', include('nba.urls', namespace="games")),
     url(r'^admin/', include(admin.site.urls)),
+    url(r'^login/$', 'django.contrib.auth.views.login'),
+    url(r'^logout/$', 'django.contrib.auth.views.logout',  {'next_page': '/games'}),
 )
