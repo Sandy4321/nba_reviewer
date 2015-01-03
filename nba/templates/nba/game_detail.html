@@ -1,84 +1,101 @@
 {% extends "nba/base.html" %}
+{% load watchedgame %}
 {% block title %} {{ game.away.key }} @ {{ game.home.key }} {% endblock %}
 
 {% block content %}
+
+
 
 <div class="jumbotron">
 	<h1> {{ game.away }} at {{ game.home}} </h1>
 	<h4> Offence </h4>
 	<div class="progress">
 		<div class="progress-bar progress-bar-striped" role="progressbar" 
-			data-transitiongoal="{{ game.rating.offence }}">
-		</div>
+		data-transitiongoal="{{ game.rating.offence }}">
 	</div>
-
-	<h4> Defence </h4>
-	<div class="progress">
-		<div class="progress-bar progress-bar-striped" role="progressbar" 
-			data-transitiongoal="{{ game.rating.defence }}" >
-		</div>
-	</div>
-
-	<h4> Commentary </h4>
-	<div class="progress">
-		<div class="progress-bar progress-bar-striped" role="progressbar" 
-			data-transitiongoal="{{ game.rating.commentary }}" >
-		</div>
-	</div>
-
-	<p><a class="btn btn-primary btn-lg" href="{% url 'games:comments' game.id %}" role="button">Show all comments</a></p>
 </div>
 
-<h1>Write Your Own Review: </h1>
+<h4> Defence </h4>
+<div class="progress">
+	<div class="progress-bar progress-bar-striped" role="progressbar" 
+	data-transitiongoal="{{ game.rating.defence }}" >
+</div>
+</div>
 
+<h4> Commentary </h4>
+<div class="progress">
+	<div class="progress-bar progress-bar-striped" role="progressbar" 
+	data-transitiongoal="{{ game.rating.commentary }}" >
+</div>
+</div>
 
+<p><a class="btn btn-primary btn-lg" href="{% url 'games:comments' game.id %}" role="button">Show all comments</a></p>
 
-<form action="{% url 'games:review' game.id %}" method="post">
+<form action="{% url 'games:setwatched' game.id user.id %}" method="POST">
 	{% csrf_token %}
+	{% if game|watched:user %}
+	<button type="submit" class="btn btn-danger">
+		<span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Set Unwatched
+		{% else %}
+		<button type="submit" class="btn btn-success">
+			<span class="glyphicon glyphicon-ok" aria-hidden="true"></span> Set Watched
+			{% endif %}
+		</button>
 
-	<div class="row">
-		<div class="col-md-8">
-			<textarea name="review" id="review" class="form-control" rows="3" placeholder="Write your own review:"></textarea>
-		</div>
-	</div>
-
-	<div class="row">
-		<div class="col-md-8">
-			<input type="text" class="form-control" name="conclusion" id="conclusion" placeholder="Your conclusion:"/>
-		</div>
-	</div>
-
-	<div class="row">
-		<div class="col-xs-4">
-			<label for="rating_offence">Offence</label>
-		</div>
-		<div class="col-xs-8">
-			<input type="number" name="rating_offence" id="rating_offence"  class="rating"  data-min="1" data-max="10" data-empty-value="0" />
-		</div>
-	</div>
+	</form>
 	
-	<div class="row">
-		<div class="col-xs-4">
-			<label for="rating_defence">Defence</label>
-		</div>
-		<div class="col-xs-8">
-			<input type="number" name="rating_defence" id="rating_defence" class="rating"  data-min="1" data-max="10" data-empty-value="0" />
-		</div>
-	</div>
+</div>
 
-	<div class="row">
-		<div class="col-xs-4">
-			<label for="rating_commentary">Commentary</label>
+	<h1>Write Your Own Review: </h1>
+
+
+
+	<form action="{% url 'games:review' game.id %}" method="post">
+		{% csrf_token %}
+
+		<div class="row">
+			<div class="col-md-8">
+				<textarea name="review" id="review" class="form-control" rows="3" placeholder="Write your own review:"></textarea>
+			</div>
 		</div>
-		<div class="col-xs-8">
-			<input type="number" name="rating_commentary" id="rating_commentary" class="rating"  data-min="1" data-max="10" data-empty-value="0" />
+
+		<div class="row">
+			<div class="col-md-8">
+				<input type="text" class="form-control" name="conclusion" id="conclusion" placeholder="Your conclusion:"/>
+			</div>
 		</div>
-	</div>
 
-	<p>
-		<input type="submit" value="Review" class="btn btn-primary btn-lg"/>
-	</p>
+		<div class="row">
+			<div class="col-xs-4">
+				<label for="rating_offence">Offence</label>
+			</div>
+			<div class="col-xs-8">
+				<input type="number" name="rating_offence" id="rating_offence"  class="rating"  data-min="1" data-max="10" data-empty-value="0" />
+			</div>
+		</div>
 
-</form>
+		<div class="row">
+			<div class="col-xs-4">
+				<label for="rating_defence">Defence</label>
+			</div>
+			<div class="col-xs-8">
+				<input type="number" name="rating_defence" id="rating_defence" class="rating"  data-min="1" data-max="10" data-empty-value="0" />
+			</div>
+		</div>
 
-{% endblock %} 
+		<div class="row">
+			<div class="col-xs-4">
+				<label for="rating_commentary">Commentary</label>
+			</div>
+			<div class="col-xs-8">
+				<input type="number" name="rating_commentary" id="rating_commentary" class="rating"  data-min="1" data-max="10" data-empty-value="0" />
+			</div>
+		</div>
+
+		<p>
+			<input type="submit" value="Review" class="btn btn-primary btn-lg"/>
+		</p>
+
+	</form>
+
+	{% endblock %} 

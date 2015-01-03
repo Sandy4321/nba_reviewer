@@ -1,4 +1,4 @@
-from django.shortcuts import get_object_or_404, render, render_to_response
+from django.shortcuts import get_object_or_404, render, render_to_response, redirect
 from django.views.generic.base import RedirectView
 from django.http import HttpResponseRedirect, HttpResponse
 from django.core.urlresolvers import reverse
@@ -6,8 +6,9 @@ from django.views import generic
 from django.views.generic.dates import DayArchiveView
 from datetime import datetime, timedelta, time
 from pytz import timezone
-from nba.models import Team, Game, GameComment, GameRating
-from nba.forms import UserForm, UserProfileForm
+from nba.models import Team, Game, GameComment, GameRating, GamePerUser
+from django.contrib.auth.models import User
+from nba.forms import UserForm
 from django.template import RequestContext
 
 
@@ -70,6 +71,39 @@ def review(request, game_id):
         return HttpResponseRedirect(reverse('games:detail', args=(game.id,)))
 
 
+def setwatched(request, game_id, user_id):
+    try:
+        game_per_user = GamePerUser.objects.filter(game_id=game_id,user_id=user_id)
+
+        if not game_per_user:
+            try:
+                gpu = GamePerUser()
+                gpu.game = Game(id=game_id)
+                gpu.user = User(id=user_id)
+                gpu.watched = True
+                gpu.save()
+            except Exception as e:
+                print '%s (%s)' % (e.message, type(e))
+           
+
+        else:
+            game_per_user = game_per_user[0]
+
+            if game_per_user.watched == True:
+                game_per_user.watched = False
+            else:
+                game_per_user.watched = True
+
+            game_per_user.save()
+
+    except:
+        return render(request, 'nba/error.html', {
+            'error_message': "Something went wrong",
+        })
+    else:
+        return HttpResponseRedirect(reverse('games:detail', args=(game_id,)))
+
+
 def register(request):
     # Like before, get the request's context.
     context = RequestContext(request)
@@ -85,10 +119,9 @@ def register(request):
         # Attempt to grab information from the raw form information.
         # Note that we make use of both UserForm and UserProfileForm.
         user_form = UserForm(data=request.POST)
-        profile_form = UserProfileForm(data=request.POST)
 
         # If the two forms are valid...
-        if user_form.is_valid() and profile_form.is_valid():
+        if user_form.is_valid():
             # Save the user's form data to the database.
             user = user_form.save()
 
@@ -96,22 +129,6 @@ def register(request):
             # Once hashed, we can update the user object.
             user.set_password(user.password)
             user.save()
-
-            # Now sort out the UserProfile instance.
-            # Since we need to set the user attribute ourselves, we set commit=False.
-            # This delays saving the model until we're ready to avoid integrity
-            # problems.
-            profile = profile_form.save(commit=False)
-            profile.user = user
-
-            # Did the user provide a profile picture?
-            # If so, we need to get it from the input form and put it in the
-            # UserProfile model.
-            if 'picture' in request.FILES:
-                profile.picture = request.FILES['picture']
-
-            # Now we save the UserProfile model instance.
-            profile.save()
 
             # Update our variable to tell the template registration was
             # successful.
@@ -129,11 +146,10 @@ def register(request):
     # These forms will be blank, ready for user input.
     else:
         user_form = UserForm()
-        profile_form = UserProfileForm()
 
     # Render the template depending on the context.
     return render_to_response(
         'registration/register.html',
-        {'user_form': user_form, 'profile_form': profile_form, 'registered': registered,
+        {'user_form': user_form, 'registered': registered,
             'registration_error': registration_error},
         context)

@@ -6,18 +6,6 @@ from pytz import timezone
 from django.contrib.auth.models import User
 
 
-class UserProfile(models.Model):
-    # This line is required. Links UserProfile to a User model instance.
-    user = models.OneToOneField(User)
-
-    # The additional attributes we wish to include.
-    picture = models.ImageField(upload_to='profile_images', blank=True)
-
-    # Override the __unicode__() method to return out something meaningful!
-    def __unicode__(self):
-        return self.user.username
-
-
 class Team(models.Model):
     team_id = models.CharField(unique=True, max_length=16)
     city = models.CharField(max_length=64)
@@ -70,6 +58,13 @@ class Game(models.Model):
 
     def __unicode__(self):
         return '%s - %s (%s)' % (self.home, self.away, self.date)
+
+
+class GamePerUser(models.Model):
+    # This line is required. Links UserProfile to a User model instance.
+    user = models.ForeignKey(User)
+    game = models.ForeignKey(Game)
+    watched = models.BooleanField()
 
 
 class GameRating(models.Model):

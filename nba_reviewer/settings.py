@@ -90,3 +90,7 @@ TEMPLATE_DIRS = [os.path.join(BASE_DIR, 'templates')]
 
 
 LOGIN_REDIRECT_URL = '/games'
+
+MEDIA_ROOT = '/home/stijn/Development/django/projects/nba_reviewer/'
+
+MEDIA_URL = '/nba_reviewer/'

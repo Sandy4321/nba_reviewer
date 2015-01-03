@@ -1,5 +1,5 @@
 from django.contrib import admin
-from nba.models import Game, Team, GameComment, GameRating, UserProfile
+from nba.models import Game, Team, GameComment, GameRating, GamePerUser
 
 class CommentInline(admin.TabularInline):
     model = GameComment
@@ -14,4 +14,4 @@ admin.site.register(Game, GameAdmin)
 admin.site.register(Team,)
 admin.site.register(GameComment,)
 admin.site.register(GameRating)
-admin.site.register(UserProfile)
+admin.site.register(GamePerUser)
