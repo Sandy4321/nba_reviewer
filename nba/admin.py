@@ -1,5 +1,5 @@
 from django.contrib import admin
-from nba.models import Game, Team, GameComment, GameRating
+from nba.models import Game, Team, GameComment, GameRating, UserProfile
 
 class CommentInline(admin.TabularInline):
     model = GameComment
@@ -10,17 +10,8 @@ class GameAdmin(admin.ModelAdmin):
 	search_fields = ['home', 'away', 'date']
 	list_filter = ['date']
 
-class TeamAdmin(admin.ModelAdmin):
-	pass
-
-class GameCommentAdmin(admin.ModelAdmin):
-	pass
-
-class GameRatingAdmin(admin.ModelAdmin):
-	pass
-
-
 admin.site.register(Game, GameAdmin)
-admin.site.register(Team, TeamAdmin)
-admin.site.register(GameComment, GameCommentAdmin)
-admin.site.register(GameRating, GameRatingAdmin)
+admin.site.register(Team,)
+admin.site.register(GameComment,)
+admin.site.register(GameRating)
+admin.site.register(UserProfile)
