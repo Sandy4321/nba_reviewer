@@ -64,7 +64,7 @@ class GamePerUser(models.Model):
     # This line is required. Links UserProfile to a User model instance.
     user = models.ForeignKey(User)
     game = models.ForeignKey(Game)
-    watched = models.BooleanField()
+    watched = models.BooleanField(default=False)
 
 
 class GameRating(models.Model):
