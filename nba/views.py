@@ -9,6 +9,7 @@ from pytz import timezone
 from nba.models import Team, Game, GameComment, GameRating, GamePerUser
 from django.contrib.auth.models import User
 from nba.forms import UserForm
+from django.contrib.auth.decorators import login_required
 from django.template import RequestContext
 
 
@@ -38,6 +39,7 @@ class CommentsView(generic.DetailView):
     template_name = 'nba/game_comments.html'
 
 
+@login_required
 def review(request, game_id):
     game = get_object_or_404(Game, pk=game_id)
     try:
@@ -71,6 +73,7 @@ def review(request, game_id):
         return HttpResponseRedirect(reverse('games:detail', args=(game.id,)))
 
 
+@login_required
 def setwatched(request, game_id, user_id):
     try:
         game_per_user = GamePerUser.objects.filter(game_id=game_id,user_id=user_id)
