@@ -76,6 +76,7 @@ class GameRating(models.Model):
 
 class GameComment(models.Model):
     game = models.ForeignKey(Game)
+    user = models.ForeignKey(User)
     text = models.CharField(max_length=1024)
     conclusion = models.CharField(max_length=128)
     date = models.DateTimeField()

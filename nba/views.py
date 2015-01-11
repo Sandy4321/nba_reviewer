@@ -55,6 +55,8 @@ def review(request, game_id):
         c.conclusion = comment_conclusion
         c.game = game
         c.date = datetime.now()
+        if request.user.is_authenticated():
+            c.user = request.user
         c.save()
 
         r = GameRating()
@@ -76,7 +78,8 @@ def review(request, game_id):
 @login_required
 def setwatched(request, game_id, user_id):
     try:
-        game_per_user = GamePerUser.objects.filter(game_id=game_id,user_id=user_id)
+        game_per_user = GamePerUser.objects.filter(
+            game_id=game_id, user_id=user_id)
 
         if not game_per_user:
             try:
@@ -87,7 +90,6 @@ def setwatched(request, game_id, user_id):
                 gpu.save()
             except Exception as e:
                 print '%s (%s)' % (e.message, type(e))
-           
 
         else:
             game_per_user = game_per_user[0]

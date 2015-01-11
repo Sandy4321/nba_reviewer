@@ -48,56 +48,60 @@
 	
 </div>
 
-	<h1>Write Your Own Review: </h1>
+	{% if not user.is_anonymous %}
+		<h1>Write Your Own Review: </h1>
 
 
 
-	<form action="{% url 'games:review' game.id %}" method="post">
-		{% csrf_token %}
+		<form action="{% url 'games:review' game.id %}" method="post">
+			{% csrf_token %}
 
-		<div class="row">
-			<div class="col-md-8">
-				<textarea name="review" id="review" class="form-control" rows="3" placeholder="Write your own review:"></textarea>
+			<div class="row">
+				<div class="col-md-8">
+					<textarea name="review" id="review" class="form-control" rows="3" placeholder="Write your own review:"></textarea>
+				</div>
 			</div>
-		</div>
 
-		<div class="row">
-			<div class="col-md-8">
-				<input type="text" class="form-control" name="conclusion" id="conclusion" placeholder="Your conclusion:"/>
+			<div class="row">
+				<div class="col-md-8">
+					<input type="text" class="form-control" name="conclusion" id="conclusion" placeholder="Your conclusion:"/>
+				</div>
 			</div>
-		</div>
 
-		<div class="row">
-			<div class="col-xs-4">
-				<label for="rating_offence">Offence</label>
+			<div class="row">
+				<div class="col-xs-4">
+					<label for="rating_offence">Offence</label>
+				</div>
+				<div class="col-xs-8">
+					<input type="number" name="rating_offence" id="rating_offence"  class="rating"  data-min="1" data-max="10" data-empty-value="0" />
+				</div>
 			</div>
-			<div class="col-xs-8">
-				<input type="number" name="rating_offence" id="rating_offence"  class="rating"  data-min="1" data-max="10" data-empty-value="0" />
-			</div>
-		</div>
 
-		<div class="row">
-			<div class="col-xs-4">
-				<label for="rating_defence">Defence</label>
+			<div class="row">
+				<div class="col-xs-4">
+					<label for="rating_defence">Defence</label>
+				</div>
+				<div class="col-xs-8">
+					<input type="number" name="rating_defence" id="rating_defence" class="rating"  data-min="1" data-max="10" data-empty-value="0" />
+				</div>
 			</div>
-			<div class="col-xs-8">
-				<input type="number" name="rating_defence" id="rating_defence" class="rating"  data-min="1" data-max="10" data-empty-value="0" />
-			</div>
-		</div>
 
-		<div class="row">
-			<div class="col-xs-4">
-				<label for="rating_commentary">Commentary</label>
+			<div class="row">
+				<div class="col-xs-4">
+					<label for="rating_commentary">Commentary</label>
+				</div>
+				<div class="col-xs-8">
+					<input type="number" name="rating_commentary" id="rating_commentary" class="rating"  data-min="1" data-max="10" data-empty-value="0" />
+				</div>
 			</div>
-			<div class="col-xs-8">
-				<input type="number" name="rating_commentary" id="rating_commentary" class="rating"  data-min="1" data-max="10" data-empty-value="0" />
-			</div>
-		</div>
 
-		<p>
-			<input type="submit" value="Review" class="btn btn-primary btn-lg"/>
-		</p>
+			<p>
+				<input type="submit" value="Review" class="btn btn-primary btn-lg"/>
+			</p>
 
-	</form>
+		</form>
+	{% else %}
+		<h2>Please login to review this game.</h2>
+	{% endif %}
 
 	{% endblock %} 
